@@ -1,37 +1,18 @@
-'use strict';
+require('dotenv').config();
+const { connectDB } = require("./db/db");
+const http = require('http');
 
-const express = require('express');
-const bodyParser = require('body-parser');
-const { addTask } = require('./rabbit-utils/sendTask');
+connectDB();
+const app = require('./app');
+const { getTask } = require('./rabbit-utils/receiveTask');
+const { socketConnection } = require('./utils/socket-io');
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+getTask('rapid-runner-rabbit', 'completed-orders');
 
-// Middleware
-app.use(bodyParser.json());
+const server = http.createServer(app);
+socketConnection(server);
 
-// Routes
-// Endpoint to add a new sandwich order
-app.post('/orders', (req, res) => {
-  const order = req.body;
-  // Add order to the message queue
-  addTask('localhost', 'sandwich-orders', order);
-  res.status(201).json({ message: 'Order received successfully' });
-});
-
-// Endpoint to show the state of earlier orders
-app.get('/orders', (req, res) => {
-  // Logic to retrieve earlier orders' state (if needed)
-  res.status(200).json({ message: 'Showing state of earlier orders' });
-});
-
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: 'Internal Server Error' });
-});
-
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server A is running on port ${PORT}`);
+const port = process.env.PORT || 3000;
+server.listen(port, () => {
+  console.log(`App running on port ${port}!`);
 });

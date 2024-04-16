@@ -4,7 +4,8 @@
   "description": "This directory is for the code and documentation of the _server A_. A starter Dockerfile has been added, it has some comments to get you started.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ."
   },
   "author": "",
   "license": "ISC",
