@@ -14,20 +14,24 @@ services:
   # server-a is based on the Docker image the groups produce and build themselves.
   server-a:
     # Change the image information to match your server A image
-    image: # $USERNAME/$IMAGENAME:$TAG, something like group000/node-swagger:3a
+    image: project/server-a:1.0
     # 'depends_on' and 'command' are  to be used when used
     # with RabbitMQ service in this file. 'depends_on' must be set
     # to RabbitMQ service's name from this file, and 'command'
     # can be modified to be anything, but what is given should
     # work. Just uncomment them
-    # depends_on:
-    #   -  rapid-runner-rabbit
-    # command: ["./utils/wait-for-it.sh", "rapid-runner-rabbit:5672", "--",  "npm", "start"]
+    depends_on:
+      -  rapid-runner-rabbit
+    # command: ["node", "."]
+    command: ["./utils/wait-for-it.sh", "rapid-runner-rabbit:5672", "--",  "npm", "start"]
     build:
       dockerfile: Dockerfile
       context:  ./backend/server-a
+    # Here we map the port 8080 of the container to the
+    # port 12345 of the host. Container port has been exposed
+    # in the node:10 Docker Hub Dockerfile.
     ports:
-      - "12345:8080"
+      - 80:8080
     networks:
       - backend
 
@@ -42,6 +46,16 @@ services:
   #   ports:
   #   expose:
   #   networks:
+  rapid-runner-rabbit:
+    image: rabbitmq:3-management
+    ports: 
+      - 5672:5672
+      - 15672:15672
+    # expose:
+    #   - "5672"
+    #   - "15672"
+    networks:
+      - backend
 
   # much of the server-b service entry can be copied from server-a
   # service above. server-b directory Dockerfile has more
@@ -58,6 +72,16 @@ services:
       #   context:
       # expose:
       # networks:
+  server-b:
+      image: project/server-b:1.0
+      depends_on:
+        -  rapid-runner-rabbit
+      command: ["./utils/wait-for-it.sh", "rapid-runner-rabbit:5672", "--",  "node", "."]
+      build:
+        dockerfile: Dockerfile
+        context: ./backend/server-b
+      networks:
+        - backend
 
   # Your group might want to use a database to store some data
   # You can use any database you wish, PostgreSQL, MySQL and
