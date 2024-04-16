@@ -10,3 +10,25 @@
 
 
 #FROM node:version...
+FROM node:15
+
+# Set the working directory to /app
+WORKDIR /app
+
+# Copy the package.json and package-lock.json files to the container
+COPY package*.json ./
+
+# Install app dependencies
+RUN npm install
+
+# Copy the rest of the application source code to the container
+COPY . .
+
+ENV PORT=8080
+ENV ACCESS_TOKEN_SECRET_KEY="mysecretkey"
+
+# Expose port 8080 for incoming traffic
+# EXPOSE 8080
+
+# Start the server by default when the container starts
+CMD [ "npm", "start" ]
