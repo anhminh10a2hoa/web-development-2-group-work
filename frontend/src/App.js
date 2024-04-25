@@ -7,11 +7,15 @@ const App = () => {
   const [orderStatus, setOrderStatus] = useState('');
 
   const handleOrderSubmit = (order) => {
+    // Here, you would typically make an API call to submit the order
+    // For demonstration, we're just updating the orders state
     setOrders([...orders, order]);
   };
 
   const handleCheckStatus = (orderId) => {
-     setOrderStatus(`Status of order ${orderId}: In Progress`);
+    // Here, you would make an API call to check the status of the order
+    // For demonstration, we're just updating the order status state
+    setOrderStatus(`Status of order ${orderId}: In Progress`);
   };
 
   return (
