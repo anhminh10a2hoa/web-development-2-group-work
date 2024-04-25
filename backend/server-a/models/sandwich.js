@@ -27,12 +27,11 @@ const sandwichSchema = new Schema({
   breadType: {
     type: String,
     required: [true, 'Please specify the type of bread for the sandwich'],
-    enum: ["oat", "rye", "wheat"],
   },
 });
 
 // Creating the Sandwich model
-const Sandwich = mongoose.model('Sandwich', sandwichSchema);
+const Sandwich = mongoose.model('sandwich', sandwichSchema);
 
 // Exporting the Sandwich model
 module.exports = Sandwich;

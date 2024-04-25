@@ -4,7 +4,7 @@ require('dotenv').config();
 const connectDB = () => {
   mongoose
     .connect(
-      `mongodb+srv://hoanganhminh256:T5ubmcNqwtCJUZS2@cluster0.3lmvqos.mongodb.net/WebDev`,
+      `mongodb+srv://test:mLsEe61e9e02aypn@cluster0.bzfpyxy.mongodb.net/webdev`,
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,

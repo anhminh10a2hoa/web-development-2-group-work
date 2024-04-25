@@ -1,0 +1,68 @@
+[
+  {
+    "name": "Chicken Sandwich",
+    "price": 8.99,
+    "image": "https://www.edelweissbakeryfl.com/blog/wp-content/uploads/2022/01/Chicken-Sandwich-300x200.jpg",
+    "description": "A delicious sandwich featuring tender chicken breast, served on whole wheat bread with a creamy spread of mayonnaise and mustard.",
+    "toppings": [
+      {"id": 1, "name": "Mayonnaise"},
+      {"id": 2, "name": "Mustard"}
+    ],
+    "breadType": "Whole Wheat"
+  },
+  {
+    "name": "Egg Sandwich",
+    "price": 7.99,
+    "image": "https://www.edelweissbakeryfl.com/blog/wp-content/uploads/2022/01/Egg-Sandwich-300x225.jpg",
+    "description": "A classic breakfast option, this egg sandwich is made with fluffy eggs and served on white bread. It's perfect for starting your day off right.",
+    "toppings": [
+      {"id": 1, "name": "Mayonnaise"},
+      {"id": 2, "name": "Mustard"}
+    ],
+    "breadType": "White"
+  },
+  {
+    "name": "Roast Beef Sandwich",
+    "price": 6.99,
+    "image": "https://www.edelweissbakeryfl.com/blog/wp-content/uploads/2022/01/Roast-Beef-Sandwich-300x200.jpg",
+    "description": "Sink your teeth into this savory roast beef sandwich, featuring thinly sliced roast beef on sourdough bread, complemented with a rich spread of butter.",
+    "toppings": [
+      {"id": 1, "name": "Butter"}
+    ],
+    "breadType": "Sourdough"
+  },
+  {
+    "name": "Grilled Cheese",
+    "price": 5.99,
+    "image": "https://www.edelweissbakeryfl.com/blog/wp-content/uploads/2022/01/Grilled-Cheese-300x169.jpg",
+    "description": "Indulge in the gooey goodness of a grilled cheese sandwich made with melted cheese between slices of rye bread. Topped with Russian dressing and tangy sauerkraut for extra flavor.",
+    "toppings": [
+      {"id": 1, "name": "Russian Dressing"},
+      {"id": 2, "name": "Sauerkraut"}
+    ],
+    "breadType": "Rye"
+  },
+  {
+    "name": "Ham Sandwich",
+    "price": 4.99,
+    "image": "https://www.edelweissbakeryfl.com/blog/wp-content/uploads/2022/01/Ham-Sandwich-300x200.jpg",
+    "description": "Savor the flavor of this ham sandwich, featuring thinly sliced ham wrapped in a soft tortilla wrap. Topped with zesty Caesar dressing and grated Parmesan cheese.",
+    "toppings": [
+      {"id": 1, "name": "Caesar Dressing"},
+      {"id": 2, "name": "Parmesan Cheese"}
+    ],
+    "breadType": "Wrap"
+  },
+  {
+    "name": "Nutella Sandwich",
+    "price": 3.99,
+    "image": "https://www.edelweissbakeryfl.com/blog/wp-content/uploads/2022/01/Nutella-Sandwich-300x200.jpg",
+    "description": "Treat yourself to a sweet sensation with this Nutella sandwich, featuring creamy Nutella spread on multigrain bread. Topped with a unique combination of mayonnaise, celery, and onion for added crunch and flavor.",
+    "toppings": [
+      {"id": 1, "name": "Mayonnaise"},
+      {"id": 2, "name": "Celery"},
+      {"id": 3, "name": "Onion"}
+    ],
+    "breadType": "Multigrain"
+  }
+]
