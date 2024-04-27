@@ -6,6 +6,7 @@
 
 var amqp = require('amqplib');
 
+const sendTask = require('./sendTask.js')
 
 module.exports.getTask = function(rabbitHost, queueName){
   amqp.connect('amqp://' + rabbitHost).then(function(conn) {
@@ -26,6 +27,7 @@ module.exports.getTask = function(rabbitHost, queueName){
         //console.log(" [x] Task takes %d seconds", secs);
         setTimeout(function() {
           console.log(new Date(), " [x] Done");
+          sendTask.addTask("rapid-runner-rabbit", "completed-orders", body);
           ch.ack(msg);
         }, 10000);
       }
