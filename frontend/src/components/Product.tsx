@@ -64,7 +64,7 @@ export const Product: React.FC<ProductProps> = ({ id }) => {
       <Box
         component="img"
         sx={{
-          height: "90vh",
+          height: "50vh",
           objectFit: "cover",
           width: "100%",
         }}
@@ -117,12 +117,7 @@ export const Product: React.FC<ProductProps> = ({ id }) => {
               </Box>
             );
           })}
-        <Typography variant="subtitle1">
-          Each topping cost 0.5
-        </Typography>
         </Box>
-
-
         <Button onClick={onAddToCart}>
           Add to cart
         </Button>
