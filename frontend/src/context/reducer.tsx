@@ -109,7 +109,8 @@ export type Action =
   | { type: "REMOVE_ITEM_FROM_CART"; id: number }
   | { type: "SET_ORDERS"; payload: Order[] }
   | { type: "SET_SIGNUP_MESSAGE"; payload: string }
-  | { type: "DELETE_ORDER"; orderId: string };
+  | { type: "DELETE_ORDER"; orderId: string }
+  | { type: "ADD_ORDER"; payload: Order };
 
 export const reducer = (
   state: StoreStateType,
@@ -221,7 +222,7 @@ export const reducer = (
           let step = 0;
           switch (order.status) {
             case "Ordered":
-            step = 1;
+              step = 1;
               break;
 
             case "Received":
@@ -246,8 +247,8 @@ export const reducer = (
 
           return {
             ...order,
-            activeStep : step
-          }
+            activeStep: step,
+          };
         }),
       };
     }
@@ -255,17 +256,26 @@ export const reducer = (
     case "SET_SIGNUP_MESSAGE": {
       return {
         ...state,
-        signupMessage : action.payload
-      }
+        signupMessage: action.payload,
+      };
     }
 
-    case "DELETE_ORDER" : {
-      deleteOrder(action.orderId, Cookies.get('accessToken')?.toString()!);
-      const newOrder = state.orders.filter(order => order._id !== action.orderId);
+    case "DELETE_ORDER": {
+      deleteOrder(action.orderId, Cookies.get("accessToken")?.toString()!);
+      const newOrder = state.orders.filter(
+        (order) => order._id !== action.orderId
+      );
       return {
         ...state,
-        orders : newOrder
-      }
+        orders: newOrder,
+      };
+    }
+
+    case "ADD_ORDER": {
+      return {
+        ...state,
+        orders: [...state.orders, action.payload],
+      };
     }
 
     default:
@@ -302,5 +312,5 @@ export const initialState: StoreStateType = {
   cart: [],
   openCart: false,
   orders: [],
-  signupMessage: null
+  signupMessage: null,
 };
