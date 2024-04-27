@@ -14,14 +14,14 @@ export const Product: React.FC<ProductProps> = ({ id }) => {
   const sandwich = state.sandwiches.find((s) => s._id === id);
 
   useEffect(() => {
-    dispatch({ type: "set-current-sandwich", payload: sandwich });
+    dispatch({ type: "SET_CURRENT_SANDWICH", payload: sandwich });
   }, [sandwich])
   
   
   const onAddToCart = () => {
     setOpen(true);
-    dispatch({ type : "add-to-cart" });
-    dispatch({ type: "set-current-sandwich", payload: sandwich });
+    dispatch({ type : "ADD_TO_CART" });
+    dispatch({ type: "SET_CURRENT_SANDWICH", payload: sandwich });
   }
 
   const handleClose = (_: React.SyntheticEvent | Event, reason?: string) => {
@@ -111,8 +111,8 @@ export const Product: React.FC<ProductProps> = ({ id }) => {
                   variant="outlined"
                   aria-label="outlined button group"
                 >
-                  <Button onClick={() => dispatch({ type: "set-current-topping", id: i, number: -1})}>-</Button>
-                  <Button onClick={() => dispatch({ type: "set-current-topping", id: i, number: 1})}>+</Button>
+                  <Button onClick={() => dispatch({ type: "SET_CURRENT_TOPPING", id: i, number: -1})}>-</Button>
+                  <Button onClick={() => dispatch({ type: "SET_CURRENT_TOPPING", id: i, number: 1})}>+</Button>
                 </ButtonGroup>
               </Box>
             );
@@ -129,7 +129,7 @@ export const Product: React.FC<ProductProps> = ({ id }) => {
       </Box>
       <Snackbar
           open={state.snackOpen}
-          onClose={() => dispatch({ type : "close-snackbar" })}
+          onClose={() => dispatch({ type : "CLOSE_SNACKBAR" })}
           message= {state.snackMessage}
         />
     </Container>

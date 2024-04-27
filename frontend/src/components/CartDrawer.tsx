@@ -20,22 +20,22 @@ export const CartDrawer: React.FC = ({}) => {
   const onPlaceOrder = () => {
     if (state.user === null) 
     {
-      dispatch({ type : "set-snackbar-message", payload : "You need to log in to make an order!"});
-      dispatch({ type: "togle-cart" });
+      dispatch({ type : "SET_SNACKBAR_MESSAGE", payload : "You need to log in to make an order!"});
+      dispatch({ type: "TOGGLE_CART" });
       return;
     }
     
     makeOrder(state.cart, Cookies.get('accessToken')?.toString()!);
-    dispatch({ type : "set-cart", payload: []});
-    dispatch({ type : "set-snackbar-message", payload : "Order successful!"});
-    dispatch({ type: "togle-cart" });
+    dispatch({ type : "SET_CART", payload: []});
+    dispatch({ type : "SET_SNACKBAR_MESSAGE", payload : "Order successful!"});
+    dispatch({ type: "TOGGLE_CART" });
   }
 
   return (
     <Drawer
       anchor="right"
       open={state.openCart}
-      onClose={() => dispatch({ type: "togle-cart" })}
+      onClose={() => dispatch({ type: "TOGGLE_CART" })}
     >
       <Box
         sx={{
@@ -78,7 +78,7 @@ export const CartDrawer: React.FC = ({}) => {
 
               <Container sx={{ display: "flex", mb: 5, mt: 1 }}>
                 <Button
-                  onClick={() => dispatch({ type: "remove-item-cart", id: i })}
+                  onClick={() => dispatch({ type: "REMOVE_ITEM_FROM_CART", id: i })}
                 >
                   <CloseIcon />
                   Remove

@@ -31,32 +31,31 @@ export const StoreProvider : React.FC<Props> = ({children}: { children?: React.R
     }
     if (await service.validateToken(token))
     {
-      return dispatch({ type: "set-user", payload: decodeToken(token) });
+      return dispatch({ type: "SET_USER", payload: decodeToken(token) });
     } 
     return Cookies.remove('accessToken');
   }
 
   const fetchSandwiches = async () => {
     const sandwiches = await fetchSandwich();
-    dispatch({ type: "set-sandwiches", payload : sandwiches });
+    dispatch({ type: "SET_SANDWICHES", payload : sandwiches });
   }
 
   const fetchingOrders =async () => {
     const orders = await fetchOrders(Cookies.get('accessToken')?.toString()!);
-    dispatch({ type : "set-orders", payload : orders})
+    dispatch({ type : "SET_ORDERS", payload : orders})
   }
 
   useEffect(() => {
     validateCurrentToken();
     fetchSandwiches();
-    dispatch({ type : "set-cart", payload: getAllCart()});
+    dispatch({ type : "SET_CART", payload: getAllCart()});
   }, [])
 
   useEffect(() => {
     let cleanUp = () => {}
     if (state.user !== null) 
     {
-      console.log('loged in');
       fetchingOrders();
       const socket = subscribeToOrders(state.user.name, dispatch);
       cleanUp = () => {

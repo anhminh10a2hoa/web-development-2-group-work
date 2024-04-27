@@ -12,7 +12,7 @@ export const subscribeToOrders: SubscribeToOrders = (username, dispatch) => {
   const socket = io('/');
 
   socket.on(`update-${username}`, ({ orders }: UpdateData) => {
-    dispatch({ type: 'set-orders', payload: orders });
+    dispatch({ type: 'SET_ORDERS', payload: orders });
   });
 
   return socket;

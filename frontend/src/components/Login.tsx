@@ -19,7 +19,7 @@ const Login = () => {
   const handleSubmit = (e : React.SyntheticEvent) => {  
     e.preventDefault();
 
-    dispatch({ type : "clear-login-message" });
+    dispatch({ type : "CLEAR_LOGIN_MESSAGE" });
 
     const target = e.target as typeof e.target & {
       username: { value: string };
@@ -33,14 +33,14 @@ const Login = () => {
       .then(({accessToken}) => {
         Cookies.set('accessToken', accessToken);
         const user = decodeToken(accessToken);
-        dispatch({ type : "set-user", payload : user});
-        dispatch({ type : "set-snackbar-message", payload : `Welcome back, ${user.name}!`})
+        dispatch({ type : "SET_USER", payload : user});
+        dispatch({ type : "SET_SNACKBAR_MESSAGE", payload : `Welcome back, ${user.name}!`})
         setTimeout(() => {
           navigate('/');
         }, 1000);
       })
       .catch((err : AxiosError) => {
-        dispatch({type : "login-failed", payload : "Username or password is incorrect!"})
+        dispatch({type : "LOGIN_FAILED", payload : "Username or password is incorrect!"})
       })
     
   };

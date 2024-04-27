@@ -24,20 +24,21 @@ const RegisterModal = () => {
     };
 
     if (information.password !== information.repeat_password) {
-      dispatch({ type : "set-signup-message", payload : "The repeat password does not match the original password. Please re-enter your password."});
+      dispatch({ type : "SET_SIGNUP_MESSAGE", payload : "The repeat password does not match the original password. Please re-enter your password."});
       return;
     }
     
     try {
       await loginService.register(information);
-      dispatch({ type : "set-signup-message", payload : "Sign up new account success."});
+      dispatch({ type : "SET_SIGNUP_MESSAGE", payload : "Sign up new account success."});
       setTimeout(() => {
         navigate('/login');
       }, 1000);
     } catch (error) {
-      // console.log(error.response.data.error.message);
+      console.error((error as any).response.data.error.message);
     }
   };
+
 
   return (
     <Box

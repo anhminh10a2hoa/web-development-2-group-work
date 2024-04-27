@@ -95,49 +95,49 @@ const modifyToppingUser = (
 };
 
 export type Action =
-  | { type: "set-sandwiches"; payload: Sandwich[] }
-  | { type: "set-current-sandwich"; payload: Sandwich | undefined }
-  | { type: "login-failed"; payload: string }
-  | { type: "set-snackbar-message"; payload: string }
-  | { type: "clear-login-message" }
-  | { type: "close-snackbar" }
-  | { type: "set-user"; payload: User | null }
-  | { type: "set-current-topping"; id: number; number: number }
-  | { type: "set-cart"; payload: SandwichUser[] }
-  | { type: "add-to-cart" }
-  | { type: "togle-cart" }
-  | { type: "remove-item-cart"; id: number }
-  | { type: "set-orders"; payload: Order[] }
-  | { type: "set-signup-message"; payload: string }
-  | { type: "delete-order"; orderId: string };
+  | { type: "SET_SANDWICHES"; payload: Sandwich[] }
+  | { type: "SET_CURRENT_SANDWICH"; payload: Sandwich | undefined }
+  | { type: "LOGIN_FAILED"; payload: string }
+  | { type: "SET_SNACKBAR_MESSAGE"; payload: string }
+  | { type: "CLEAR_LOGIN_MESSAGE" }
+  | { type: "CLOSE_SNACKBAR" }
+  | { type: "SET_USER"; payload: User | null }
+  | { type: "SET_CURRENT_TOPPING"; id: number; number: number }
+  | { type: "SET_CART"; payload: SandwichUser[] }
+  | { type: "ADD_TO_CART" }
+  | { type: "TOGGLE_CART" }
+  | { type: "REMOVE_ITEM_FROM_CART"; id: number }
+  | { type: "SET_ORDERS"; payload: Order[] }
+  | { type: "SET_SIGNUP_MESSAGE"; payload: string }
+  | { type: "DELETE_ORDER"; orderId: string };
 
 export const reducer = (
   state: StoreStateType,
   action: Action
 ): StoreStateType => {
   switch (action.type) {
-    case "set-sandwiches": {
+    case "SET_SANDWICHES": {
       return {
         ...state,
         sandwiches: [...action.payload],
       };
     }
 
-    case "clear-login-message": {
+    case "CLEAR_LOGIN_MESSAGE": {
       return {
         ...state,
         loginMessage: null,
       };
     }
 
-    case "login-failed": {
+    case "LOGIN_FAILED": {
       return {
         ...state,
         loginMessage: action.payload,
       };
     }
 
-    case "set-snackbar-message": {
+    case "SET_SNACKBAR_MESSAGE": {
       return {
         ...state,
         snackOpen: true,
@@ -145,21 +145,21 @@ export const reducer = (
       };
     }
 
-    case "close-snackbar": {
+    case "CLOSE_SNACKBAR": {
       return {
         ...state,
         snackOpen: false,
       };
     }
 
-    case "set-user": {
+    case "SET_USER": {
       return {
         ...state,
         user: action.payload,
       };
     }
 
-    case "set-current-sandwich": {
+    case "SET_CURRENT_SANDWICH": {
       return {
         ...state,
         currentSandwich: action.payload
@@ -168,7 +168,7 @@ export const reducer = (
       };
     }
 
-    case "set-current-topping": {
+    case "SET_CURRENT_TOPPING": {
       return {
         ...state,
         currentSandwich: state.currentSandwich
@@ -177,7 +177,7 @@ export const reducer = (
       };
     }
 
-    case "set-cart": {
+    case "SET_CART": {
       updateCart(action.payload);
       return {
         ...state,
@@ -185,7 +185,7 @@ export const reducer = (
       };
     }
 
-    case "add-to-cart": {
+    case "ADD_TO_CART": {
       const newCart = [...state.cart];
       newCart.push(state.currentSandwich!);
       updateCart(newCart);
@@ -196,14 +196,14 @@ export const reducer = (
       };
     }
 
-    case "togle-cart": {
+    case "TOGGLE_CART": {
       return {
         ...state,
         openCart: !state.openCart,
       };
     }
 
-    case "remove-item-cart": {
+    case "REMOVE_ITEM_FROM_CART": {
       const newCart = [...state.cart];
       newCart.splice(action.id, 1);
       updateCart(newCart);
@@ -214,7 +214,7 @@ export const reducer = (
       };
     }
 
-    case "set-orders": {
+    case "SET_ORDERS": {
       return {
         ...state,
         orders: action.payload.map((order) => {
@@ -252,14 +252,14 @@ export const reducer = (
       };
     }
 
-    case "set-signup-message": {
+    case "SET_SIGNUP_MESSAGE": {
       return {
         ...state,
         signupMessage : action.payload
       }
     }
 
-    case "delete-order" : {
+    case "DELETE_ORDER" : {
       deleteOrder(action.orderId, Cookies.get('accessToken')?.toString()!);
       const newOrder = state.orders.filter(order => order._id !== action.orderId);
       return {

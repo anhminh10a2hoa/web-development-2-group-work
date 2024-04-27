@@ -36,7 +36,7 @@ export default function Navbar() {
 
   const onLogout = () : void => {
     Cookies.remove('accessToken');
-    dispatch({ type : "set-user", payload: null });
+    dispatch({ type : "SET_USER", payload: null });
     handleClose();
   }
 
@@ -64,7 +64,7 @@ export default function Navbar() {
                   <Button onClick={handleClick}>
                     {state.user.name}
                   </Button>
-                  <Button onClick={ () => dispatch({ type : "togle-cart" })}>
+                  <Button onClick={ () => dispatch({ type : "TOGGLE_CART" })}>
                     Cart
                   </Button>
                   <Menu

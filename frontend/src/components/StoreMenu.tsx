@@ -20,7 +20,7 @@ export const StoreMenu: React.FC = ({}) => {
         </Container>
         <Snackbar
           open={state.snackOpen}
-          onClose={() => dispatch({ type : "close-snackbar" })}
+          onClose={() => dispatch({ type : "CLOSE_SNACKBAR" })}
           message= {state.snackMessage}
         />
     </Container>
