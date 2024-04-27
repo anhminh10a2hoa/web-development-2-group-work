@@ -105,7 +105,7 @@ export const Product: React.FC<ProductProps> = ({ id }) => {
                   x{topping.number}
                 </Typography>
                 <ButtonGroup
-                  sx={{ ml: "auto", alignSelf: "flex-end" }}
+                  sx={{ ml: "16px", alignSelf: "flex-end" }}
                   variant="outlined"
                   aria-label="outlined button group"
                 >
