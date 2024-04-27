@@ -49,18 +49,18 @@ export const CartDrawer: React.FC = ({}) => {
     >
       <Box
         sx={{
-          width: 500,
-          paddingTop: "50px",
-          paddingBottom: "150px",
-          ml: 4,
-          mr: 4,
+          width: 400,
+          paddingTop: "100px",
+          paddingBottom: "50px",
+          paddingLeft: 2,
+          paddingRight: 2, 
         }}
         role="presentation"
       >
-        <Typography variant="h2" sx={{ mb: 5 }}>
+        <Typography variant="h3" sx={{ mb: 5, color: "#DEAC80" }}>
           <strong>Cart</strong>
         </Typography>
-        {state.cart.map((sandwich, i) => {
+        {state.cart && state.cart.length !== 0 ? state.cart.map((sandwich, i) => {
           let topping = "";
           let numberOfTopping = 0;
           sandwich.toppings.forEach((t) => {
@@ -80,43 +80,48 @@ export const CartDrawer: React.FC = ({}) => {
 
           return (
             <div key={i}>
-              <Typography variant="h5" sx={{ ml: 2, mb: 1 }}>
-                <strong>{sandwich.name}</strong>{" "}
+              <Typography sx={{ ml: 2, mb: 1, fontSize: "16px" }}>
+                <strong>#{i + 1}: {sandwich.name}</strong>{" "}
                 {topping !== "" ? "with " + topping : "with no topping"}
               </Typography>
               <Divider />
 
-              <Container sx={{ display: "flex", mb: 5, mt: 1 }}>
+              <Box sx={{ display: "flex", mb: 5, mt: 1 }}>
                 <Button
                   onClick={() =>
                     dispatch({ type: "REMOVE_ITEM_FROM_CART", id: i })
                   }
                 >
-                  <CloseIcon />
-                  Remove
+                <CloseIcon />
+                  Remove from order
                 </Button>
-                <Typography variant="h5" sx={{ ml: "auto" }}>
+                <Typography sx={{ ml: "auto", fontSize: "20px" }}>
                   {price.toFixed(2) + " €"}
                 </Typography>
-              </Container>
+              </Box>
             </div>
           );
-        })}
+        }) : <Typography sx={{ml: 1, display: 'flex'}}>
+          Cart is empty, go to <Typography sx={{mr: 0.5, ml: 0.5, cursor: 'pointer', color: 'blue'}} onClick={() => {navigate('/')}}>menu</Typography> 
+          to add your sandwich(s)</Typography>}
 
-        <Container sx={{ display: "flex", mt: 8 }}>
-          <Typography variant="h4">
+        {state.cart && state.cart.length !== 0 && <Box sx={{ display: "flex", mt: 6, ml: 2, mr: 1 }}>
+          <Typography sx={{ fontSize: "22px" }}>
             <strong>Total:</strong>
           </Typography>
 
-          <Typography variant="h4" sx={{ ml: "auto" }}>
+          <Typography sx={{ ml: "auto", fontSize: "22px" }}>
             {totalPrice.toFixed(2) + " €"}
           </Typography>
-        </Container>
+        </Box>}
+        
 
         {state.cart.length !== 0 ? (
-          <Button onClick={() => onPlaceOrder()} sx={{ mt: 5 }}>
-            Place Order
-          </Button>
+          <Box sx={{width: "100%", display: "flex", justifyContent: "center", alignContent: "center"}}>
+            <Button onClick={() => onPlaceOrder()} sx={{ mt: 5 }}>
+              Place Order
+            </Button>
+          </Box>
         ) : null}
       </Box>
     </Drawer>

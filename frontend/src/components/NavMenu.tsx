@@ -63,7 +63,7 @@ function NavMenu() {
     <ElevationScroll>
       <AppBar
         sx={{
-          backgroundColor: "gold",
+          backgroundColor: "#B5C18E",
         }}
       >
         <Toolbar>

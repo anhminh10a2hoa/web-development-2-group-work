@@ -43,93 +43,88 @@ export const Product: React.FC<ProductProps> = ({ id }) => {
   };
 
   return sandwich && state.currentSandwich ? (
-    <Container
-      sx={{
-        mt: 15,
-        display: "grid",
-        gridTemplateColumns: "50% 50%",
-        gap: 2,
-      }}
-    >
-      <Box
-        component="img"
-        sx={{
-          height: "50vh",
-          objectFit: "cover",
-          width: "100%",
-        }}
-        alt={sandwich.name}
-        src={sandwich.image}
-      />
-      <Box sx={{ display: "flex", flexDirection: "column" }}>
-        <Typography variant="h2" sx={{ mb: 3 }}>
+    <Box sx={{ mt: 15 }}>
+      <Box sx={{ display: "flex", justifyContent: "center", alignContent: "center" }}>
+        <Typography variant="h3" sx={{ mb: 3, color: "#DEAC80" }}>
           <strong>{sandwich.name}</strong>
         </Typography>
-
-        <Typography variant="h5" sx={{ mb: 2, ml: 1 }}>
-          {sandwich.price}€
-        </Typography>
-
-        <Typography variant="h5" sx={{ ml: 1 }}>
-          <strong>Description: </strong>
-          {sandwich.description}
-        </Typography>
-
-        <Typography variant="h5" sx={{ mt: 3, ml: 1 }}>
-          <strong>Bread type:</strong> {sandwich.breadType}
-        </Typography>
-
-        <Typography variant="h5" sx={{ ml: 1, mt: 3 }}>
-          <strong>Toping:</strong>
-        </Typography>
-
-        <Box
+      </Box>
+      <Box sx={{ display: "flex", flexDirection: "column" }}>
+        <Container
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            ml: 5,
-            mt: 2,
+            display: "grid",
+            gridTemplateColumns: "50% 50%",
+            gap: 2,
           }}
         >
-          {state.currentSandwich.toppings.map((topping, i) => {
-            return (
-              <Box
-                sx={{ display: "flex", mb: 1, width: "80%" }}
-                key={topping.id}
-              >
-                <Typography variant="h6">{topping.name}</Typography>
-                <Typography
-                  sx={{ ml: "auto", alignSelf: "flex-end" }}
-                  variant="h6"
+          <Box
+            component="img"
+            sx={{
+              height: "50vh",
+              objectFit: "cover",
+              width: "100%",
+            }}
+            alt={sandwich.name}
+            src={sandwich.image}
+          />
+          <Box>
+          <Typography sx={{ fontSize: "18px", mt: 2 }}>
+            {sandwich.description}
+          </Typography>
+          <Typography sx={{ fontSize: "16px", mt: 2 }}>
+            {sandwich.breadType} - {sandwich.price}€
+          </Typography>
+          <Typography sx={{ fontSize: "16px", mt: 2 }}>
+            <strong>Toping:</strong>
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              mt: 2,
+              fontSize: "16px"
+            }}
+          >
+            {state.currentSandwich.toppings.map((topping, i) => {
+              return (
+                <Box
+                  sx={{ display: "flex", mb: 1, width: "80%" }}
+                  key={topping.id}
                 >
-                  x{topping.number}
-                </Typography>
-                <ButtonGroup
-                  sx={{ ml: "auto", alignSelf: "flex-end" }}
-                  variant="outlined"
-                  aria-label="outlined button group"
-                >
-                  <Button
-                    onClick={() => {
-                      onTopping(i, -1);
-                    }}
+                  <Typography>{topping.name}</Typography>
+                  <Typography
+                    sx={{ ml: "auto" }}
                   >
-                    -
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      onTopping(i, 1);
-                    }}
+                    x{topping.number}
+                  </Typography>
+                  <ButtonGroup
+                    sx={{ ml: "auto" }}
+                    variant="outlined"
+                    aria-label="outlined button group"
                   >
-                    +
-                  </Button>
-                </ButtonGroup>
-              </Box>
+                    <Button
+                      onClick={() => {
+                        onTopping(i, -1);
+                      }}
+                    >
+                      -
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        onTopping(i, 1);
+                      }}
+                    >
+                      +
+                    </Button>
+                  </ButtonGroup>
+                </Box>
             );
           })}
+          <Button onClick={onAddToCart}>Add to cart</Button>
         </Box>
-        <Button onClick={onAddToCart}>Add to cart</Button>
+          </Box>
+        </Container>
       </Box>
-    </Container>
+    </Box>
   ) : null;
 };

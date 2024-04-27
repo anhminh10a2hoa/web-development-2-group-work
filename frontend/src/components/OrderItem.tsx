@@ -24,12 +24,23 @@ export const OrderItem: React.FC<OrderItemProps> = ({
   return (
     <Container sx={{ mb: 3 }}>
       <Typography>
-        <strong>Order id: </strong>
+        <strong>Id: </strong>
         {orderItem._id}
       </Typography>
 
       <Typography sx={{ mt: 2 }}>
-        <strong>Order status: </strong>
+        <strong>Customer: </strong>
+        {orderItem.customerName}
+        {" "}-{" "}
+        {orderItem.customerId}
+      </Typography>
+
+      <Typography sx={{ mt: 2 }}>
+        
+      </Typography>
+
+      <Typography sx={{ mt: 2 }}>
+        <strong>Status: </strong>
       </Typography>
 
       <Stepper sx={{ mt: 2 }} activeStep={orderItem.activeStep}>
@@ -73,17 +84,7 @@ export const OrderItem: React.FC<OrderItemProps> = ({
       </Stepper>
 
       <Typography sx={{ mt: 2 }}>
-        <strong>Customer id: </strong>
-        {orderItem.customerId}
-      </Typography>
-
-      <Typography sx={{ mt: 2 }}>
-        <strong>Customer name: </strong>
-        {orderItem.customerName}
-      </Typography>
-
-      <Typography sx={{ mt: 2 }}>
-        <strong>Order items: </strong>
+        <strong>Items: </strong>
       </Typography>
       <Container>
         <List>
@@ -109,12 +110,12 @@ export const OrderItem: React.FC<OrderItemProps> = ({
       </Container>
 
       <Typography sx={{ mt: 2 }}>
-        <strong>Order total price: </strong>
+        <strong>Total price: </strong>
         {orderItem.orderPrice.toFixed(2) + "€"}
       </Typography>
 
       <Button onClick={onDeleteOrder} sx={{ mt: 1 }}>
-        Delete
+        Delete order
       </Button>
 
       <Divider style={{ marginTop: 40 }} />
