@@ -11,9 +11,11 @@ import { StoreContext } from "../context/StoreProvider";
 import CloseIcon from "@mui/icons-material/Close";
 import { makeOrder } from "../services/orders";
 import { Cookies } from "typescript-cookie";
+import { useNavigate } from "react-router-dom";
 
 export const CartDrawer: React.FC = ({}) => {
   const { state, dispatch } = useContext(StoreContext);
+  const navigate = useNavigate();
 
   let totalPrice = 0;
 
@@ -24,6 +26,7 @@ export const CartDrawer: React.FC = ({}) => {
         payload: "You need to log in to make an order!",
       });
       dispatch({ type: "TOGGLE_CART" });
+      navigate("/login");
       return;
     }
 

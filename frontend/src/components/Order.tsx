@@ -17,18 +17,15 @@ export const Order: React.FC = ({}) => {
             key={order._id}
             orderItem={order}
             onDeleteOrder={() => {
-              dispatch({ type: "DELETE_ORDER", orderId: order._id })
-              dispatch({ type: "SET_SNACKBAR_MESSAGE", payload: `Successfully deleted order: ${order._id}`})
-            }
-            }
+              dispatch({ type: "DELETE_ORDER", orderId: order._id });
+              dispatch({
+                type: "SET_SNACKBAR_MESSAGE",
+                payload: `Successfully deleted order: ${order._id}`,
+              });
+            }}
           />
         ))}
       </Container>
-      <Snackbar
-        open={state.snackOpen}
-        onClose={() => dispatch({ type: "CLOSE_SNACKBAR" })}
-        message={state.snackMessage}
-      />
     </Container>
   );
 };
