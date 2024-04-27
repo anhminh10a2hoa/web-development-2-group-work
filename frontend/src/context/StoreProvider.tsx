@@ -58,9 +58,11 @@ export const StoreProvider: React.FC<Props> = ({
   };
 
   useEffect(() => {
-    validateCurrentToken();
-    fetchSandwiches();
-    dispatch({ type: "SET_CART", payload: getAllCart() });
+    validateCurrentToken().then(() => {
+      fetchSandwiches();
+      dispatch({ type: "SET_CART", payload: getAllCart() });
+      dispatch({ type: "ON_READY" });
+    });
   }, []);
 
   useEffect(() => {

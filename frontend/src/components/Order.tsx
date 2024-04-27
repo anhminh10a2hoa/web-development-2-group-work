@@ -9,7 +9,7 @@ export const Order: React.FC = ({}) => {
   return (
     <Container sx={{ mt: 15, mb: 20 }}>
       <Typography sx={{ fontWeight: "bold", fontSize: "40px", mb: 5 }}>
-        ORDERS
+        {state.user?.role == "admin" ? "ALL" : "YOUR"} ORDERS
       </Typography>
       <Container>
         {state.orders.map((order) => (

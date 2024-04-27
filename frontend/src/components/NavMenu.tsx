@@ -45,6 +45,7 @@ function NavMenu() {
     Cookies.remove("accessToken");
     dispatch({ type: "SET_USER", payload: null });
     dispatch({ type: "CLEAR_ORDERS" });
+    dispatch({ type: "CLEAR_CART" });
     navigate("/");
     handleClose();
   };
@@ -67,9 +68,23 @@ function NavMenu() {
       >
         <Toolbar>
           <React.Fragment>
-            <Button>
-              <Link to={"/"}>Menu</Link>
-            </Button>
+            <Link to={"/"}>
+              <Button>Menu</Button>
+            </Link>
+            <Link to={state.user ? "/orders" : "/login"}>
+              <Button
+                onClick={() => {
+                  if (!state.user) {
+                    dispatch({
+                      type: "SET_SNACKBAR_MESSAGE",
+                      payload: "You need to log in to view orders!",
+                    });
+                  }
+                }}
+              >
+                Orders
+              </Button>
+            </Link>
             <Button onClick={() => dispatch({ type: "TOGGLE_CART" })}>
               Cart
             </Button>
@@ -95,17 +110,14 @@ function NavMenu() {
                       "aria-labelledby": "basic-button",
                     }}
                   >
-                    <MenuItem onClick={handleClose}>
-                      <Link to={"/orders"}>Orders</Link>
-                    </MenuItem>
                     <MenuItem onClick={onLogout}>Logout</MenuItem>
                   </Menu>
                 </Box>
               </React.Fragment>
             ) : (
-              <Button>
-                <Link to={"/login"}>Login</Link>
-              </Button>
+              <Link to={"/login"}>
+                <Button>Login</Button>
+              </Link>
             )}
           </React.Fragment>
         </Toolbar>

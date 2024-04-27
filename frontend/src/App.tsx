@@ -47,16 +47,18 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Navbar>
-        <Router>
-          <Route path="/" element={<StoreFront />} />
-          <Route path="/sandwich/:id" element={<ProductPage />} />
-          {state.user && <Route path="/orders" element={<OrderPage />} />}
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path={`*`} element={<Navigate to={`/`} />}></Route>
-        </Router>
-      </Navbar>
+      {state.isReady && (
+        <Navbar>
+          <Router>
+            <Route path="/" element={<StoreFront />} />
+            <Route path="/sandwich/:id" element={<ProductPage />} />
+            {state.user && <Route path="/orders" element={<OrderPage />} />}
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path={`*`} element={<Navigate to={`/`} />}></Route>
+          </Router>
+        </Navbar>
+      )}
     </BrowserRouter>
   );
 }
