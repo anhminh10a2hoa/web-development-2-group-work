@@ -4,11 +4,11 @@ services:
   server-a:
     image: project/server-a:1.0
     depends_on:
-      -  rapid-runner-rabbit
-    command: ["./utils/wait-for-it.sh", "rapid-runner-rabbit:5672", "--",  "npm", "start"]
+      - rapid-runner-rabbit
+    # command: ["./utils/wait-for-it.sh", "rapid-runner-rabbit:5672", "--",  "npm", "start"]
     build:
       dockerfile: Dockerfile
-      context:  ./backend/server-a
+      context: ./backend/server-a
     ports:
       - 80:8080
     networks:
@@ -16,22 +16,22 @@ services:
 
   rapid-runner-rabbit:
     image: rabbitmq:3-management
-    ports: 
+    ports:
       - 5672:5672
       - 15672:15672
     networks:
       - backend
 
   server-b:
-      image: project/server-b:1.0
-      depends_on:
-        -  rapid-runner-rabbit
-      command: ["./utils/wait-for-it.sh", "rapid-runner-rabbit:5672", "--",  "node", "."]
-      build:
-        dockerfile: Dockerfile
-        context: ./backend/server-b
-      networks:
-        - backend
+    image: project/server-b:1.0
+    depends_on:
+      - rapid-runner-rabbit
+    # command: ["./utils/wait-for-it.sh", "rapid-runner-rabbit:5672", "--",  "node", "."]
+    build:
+      dockerfile: Dockerfile
+      context: ./backend/server-b
+    networks:
+      - backend
 
 networks:
   backend:
