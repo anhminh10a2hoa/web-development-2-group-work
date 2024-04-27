@@ -1,8 +1,7 @@
 import { SandwichUser } from "../context/reducer";
 
-export const getAllCart = () : SandwichUser[] => {
-  if (!localStorage.getItem("cart"))
-  {
+export const getAllCart = (): SandwichUser[] => {
+  if (!localStorage.getItem("cart")) {
     localStorage.setItem("cart", JSON.stringify([]));
     return [];
   }
@@ -10,6 +9,10 @@ export const getAllCart = () : SandwichUser[] => {
   return JSON.parse(localStorage.getItem("cart")!) as SandwichUser[];
 }
 
-export const updateCart = (sandwiches : SandwichUser[]) : void => {
+export const updateCart = (sandwiches: SandwichUser[]): void => {
   return localStorage.setItem("cart", JSON.stringify(sandwiches));
+}
+
+export const clearCart = (): void => {
+  return localStorage.removeItem("cart");
 }

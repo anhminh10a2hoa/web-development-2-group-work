@@ -1,5 +1,5 @@
 import { deleteOrder } from "../services/orders";
-import { updateCart } from "../utils/cart";
+import { clearCart, updateCart } from "../utils/cart";
 import { Cookies } from "typescript-cookie";
 
 type OrderStatus = "Ordered" | "Received" | "InQueue" | "Ready" | "Failed";
@@ -104,6 +104,7 @@ export type Action =
   | { type: "SET_USER"; payload: User | null }
   | { type: "SET_CURRENT_TOPPING"; id: number; number: number }
   | { type: "SET_CART"; payload: SandwichUser[] }
+  | { type: "CLEAR_CART" }
   | { type: "ADD_TO_CART" }
   | { type: "TOGGLE_CART" }
   | { type: "REMOVE_ITEM_FROM_CART"; id: number }
@@ -111,7 +112,8 @@ export type Action =
   | { type: "CLEAR_ORDERS" }
   | { type: "SET_SIGNUP_MESSAGE"; payload: string }
   | { type: "DELETE_ORDER"; orderId: string }
-  | { type: "ADD_ORDER"; payload: Order };
+  | { type: "ADD_ORDER"; payload: Order }
+  | { type: "ON_READY" };
 
 export const reducer = (
   state: StoreStateType,
@@ -136,6 +138,13 @@ export const reducer = (
       return {
         ...state,
         loginMessage: action.payload,
+      };
+    }
+
+    case "ON_READY": {
+      return {
+        ...state,
+        isReady: true,
       };
     }
 
@@ -184,6 +193,14 @@ export const reducer = (
       return {
         ...state,
         cart: action.payload,
+      };
+    }
+
+    case "CLEAR_CART": {
+      clearCart();
+      return {
+        ...state,
+        cart: [],
       };
     }
 
@@ -307,6 +324,7 @@ export interface StoreStateType {
   currentSandwich: SandwichUser | undefined;
   cart: SandwichUser[];
   orders: Order[];
+  isReady: boolean;
 }
 
 export const initialState: StoreStateType = {
@@ -321,4 +339,5 @@ export const initialState: StoreStateType = {
   openCart: false,
   orders: [],
   signupMessage: null,
+  isReady: false,
 };

@@ -1,7 +1,16 @@
-import { Box, Button, ButtonGroup, Container, IconButton, Snackbar, Typography } from "@mui/material";
-import React, { useContext, useEffect } from "react";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Container,
+  IconButton,
+  Snackbar,
+  Typography,
+} from "@mui/material";
+import React, { useContext, useEffect, useState } from "react";
 import { StoreContext } from "../context/StoreProvider";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
+import { Sandwich } from "../context/reducer";
 
 interface ProductProps {
   id: string;
@@ -11,39 +20,27 @@ export const Product: React.FC<ProductProps> = ({ id }) => {
   const { state, dispatch } = useContext(StoreContext);
   const [open, setOpen] = React.useState(false);
 
-  const sandwich = state.sandwiches.find((s) => s._id === id);
+  const [sandwich, setSandwich] = useState<Sandwich>();
 
   useEffect(() => {
-    dispatch({ type: "SET_CURRENT_SANDWICH", payload: sandwich });
-  }, [sandwich])
-  
-  
+    const newSandwich = state.sandwiches.find((s) => s._id === id);
+    if (newSandwich) setSandwich({ ...sandwich, ...newSandwich });
+    dispatch({ type: "SET_CURRENT_SANDWICH", payload: newSandwich });
+  }, [id, state.sandwiches]);
+
   const onAddToCart = () => {
     setOpen(true);
-    dispatch({ type : "ADD_TO_CART" });
+    dispatch({ type: "ADD_TO_CART" });
     dispatch({ type: "SET_CURRENT_SANDWICH", payload: sandwich });
-  }
-
-  const handleClose = (_: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpen(false);
   };
 
-  const action = (
-    <React.Fragment>
-      <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
-        onClick={handleClose}
-      >
-        <CloseIcon fontSize="small" />
-      </IconButton>
-    </React.Fragment>
-  );
+  const onTopping = (id: number, number: number) => {
+    dispatch({
+      type: "SET_CURRENT_TOPPING",
+      id,
+      number,
+    });
+  };
 
   return sandwich && state.currentSandwich ? (
     <Container
@@ -54,13 +51,6 @@ export const Product: React.FC<ProductProps> = ({ id }) => {
         gap: 2,
       }}
     >
-      <Snackbar
-        open={open}
-        autoHideDuration={5000}
-        onClose={() => setOpen(false)}
-        message="Sandwich added to the cart!"
-        action={action}
-      />
       <Box
         component="img"
         sx={{
@@ -103,30 +93,43 @@ export const Product: React.FC<ProductProps> = ({ id }) => {
         >
           {state.currentSandwich.toppings.map((topping, i) => {
             return (
-              <Box sx={{ display: "flex", mb: 1, width: "80%" }} key={topping.id}>
+              <Box
+                sx={{ display: "flex", mb: 1, width: "80%" }}
+                key={topping.id}
+              >
                 <Typography variant="h6">{topping.name}</Typography>
-                <Typography sx = {{ml : "auto", alignSelf: "flex-end"}} variant="h6">x{topping.number}</Typography>
+                <Typography
+                  sx={{ ml: "auto", alignSelf: "flex-end" }}
+                  variant="h6"
+                >
+                  x{topping.number}
+                </Typography>
                 <ButtonGroup
-                  sx={{ ml : "auto", alignSelf: "flex-end" }}
+                  sx={{ ml: "auto", alignSelf: "flex-end" }}
                   variant="outlined"
                   aria-label="outlined button group"
                 >
-                  <Button onClick={() => dispatch({ type: "SET_CURRENT_TOPPING", id: i, number: -1})}>-</Button>
-                  <Button onClick={() => dispatch({ type: "SET_CURRENT_TOPPING", id: i, number: 1})}>+</Button>
+                  <Button
+                    onClick={() => {
+                      onTopping(i, -1);
+                    }}
+                  >
+                    -
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      onTopping(i, 1);
+                    }}
+                  >
+                    +
+                  </Button>
                 </ButtonGroup>
               </Box>
             );
           })}
         </Box>
-        <Button onClick={onAddToCart}>
-          Add to cart
-        </Button>
+        <Button onClick={onAddToCart}>Add to cart</Button>
       </Box>
-      <Snackbar
-          open={state.snackOpen}
-          onClose={() => dispatch({ type : "CLOSE_SNACKBAR" })}
-          message= {state.snackMessage}
-        />
     </Container>
   ) : null;
 };
