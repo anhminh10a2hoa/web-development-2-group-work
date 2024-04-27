@@ -49,8 +49,6 @@ export default function Navbar() {
     threshold: 10
   });
 
-  const handleLogin = () => dispatch({type: "open-login"});
-
   return (
     <React.Fragment>
       <ElevationScroll>
@@ -59,9 +57,10 @@ export default function Navbar() {
             {
               state.user
               ? <>
-                  <Link to={"/"}>
+                  <Button><Link to={"/"}>
                     Menu
                   </Link>
+                  </Button>
                   <Button onClick={handleClick}>
                     {state.user.name}
                   </Button>
@@ -81,7 +80,7 @@ export default function Navbar() {
                     <MenuItem onClick={onLogout}>Logout</MenuItem>
                   </Menu>
                 </>
-              : <Button onClick={handleLogin}>Login</Button>
+              : <Button><Link to={"/login"}>Login</Link></Button>
             }
           </Toolbar>
         </AppBar>

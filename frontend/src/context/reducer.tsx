@@ -97,8 +97,6 @@ const modifyToppingUser = (
 export type Action =
   | { type: "set-sandwiches"; payload: Sandwich[] }
   | { type: "set-current-sandwich"; payload: Sandwich | undefined }
-  | { type: "open-login" }
-  | { type: "close-login" }
   | { type: "login-failed"; payload: string }
   | { type: "set-snackbar-message"; payload: string }
   | { type: "clear-login-message" }
@@ -108,7 +106,6 @@ export type Action =
   | { type: "set-cart"; payload: SandwichUser[] }
   | { type: "add-to-cart" }
   | { type: "togle-cart" }
-  | { type: "togle-register" }
   | { type: "remove-item-cart"; id: number }
   | { type: "set-orders"; payload: Order[] }
   | { type: "set-signup-message"; payload: string }
@@ -123,20 +120,6 @@ export const reducer = (
       return {
         ...state,
         sandwiches: [...action.payload],
-      };
-    }
-
-    case "open-login": {
-      return {
-        ...state,
-        openLogin: true,
-      };
-    }
-
-    case "close-login": {
-      return {
-        ...state,
-        openLogin: false,
       };
     }
 
@@ -276,13 +259,6 @@ export const reducer = (
       }
     }
 
-    case "togle-register" : {
-      return {
-        ...state,
-        openRegister : !state.openRegister
-      }
-    }
-
     case "delete-order" : {
       deleteOrder(action.orderId, Cookies.get('accessToken')?.toString()!);
       const newOrder = state.orders.filter(order => order._id !== action.orderId);
@@ -300,8 +276,6 @@ export const reducer = (
 };
 
 export interface StoreStateType {
-  openLogin: boolean;
-  openRegister: boolean;
   openCart: boolean;
   snackOpen: boolean;
 
@@ -318,7 +292,6 @@ export interface StoreStateType {
 }
 
 export const initialState: StoreStateType = {
-  openLogin: false,
   sandwiches: [],
   loginMessage: null,
   username: null,
@@ -329,6 +302,5 @@ export const initialState: StoreStateType = {
   cart: [],
   openCart: false,
   orders: [],
-  openRegister: false,
   signupMessage: null
 };

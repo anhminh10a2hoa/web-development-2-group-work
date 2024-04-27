@@ -1,11 +1,10 @@
 import { StoreProvider } from "./context/StoreProvider";
 import { Box } from '@mui/material';
-import React from 'react'
 import { Order } from './components/Order';
 import Navbar from './components/Navbar';
 import { CartDrawer } from './components/CartDrawer';
-import LoginModal from './components/LoginModal';
-import RegisterModal from './components/RegisterModal';
+import Login from './components/Login';
+import Signup from './components/Signup';
 import { Product } from './components/Product';
 import { StoreMenu } from "./components/StoreMenu";
 import { BrowserRouter, Routes as Router, Route, useParams } from "react-router-dom";
@@ -27,8 +26,6 @@ const ProductPage = () => {
     <Box sx={{ position: "relative" }}>
       <Navbar />
       <CartDrawer/>
-      <LoginModal />
-      <RegisterModal/>
       <Product id={product.id ? product.id : ""}/>
     </Box>
   );
@@ -39,8 +36,6 @@ const StoreFront = () => {
     <Box sx={{ position: "relative" }}>
       <Navbar />
       <CartDrawer/>
-      <LoginModal />
-      <RegisterModal/>
       <StoreMenu />
     </Box>
   );
@@ -54,6 +49,8 @@ function App() {
           <Route path="/" element={ <StoreFront/> }/>
           <Route path="/sandwich/:id" element={ <ProductPage/>}/>
           <Route path="/orders" element={ <OrderPage/>}/>
+          <Route path="/login" element={ <Login />}/>
+          <Route path="/signup" element={ <Signup />}/>
         </Router>
       </BrowserRouter>
     </StoreProvider>
