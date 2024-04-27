@@ -14,7 +14,7 @@ export const Order: React.FC = ({}) => {
         </Typography>
       </Box>
       <Container>
-        {state.orders.map((order) => (
+        {state.orders && state.orders.length !== 0 ? state.orders.map((order) => (
           <OrderItem
             key={order._id}
             orderItem={order}
@@ -26,7 +26,7 @@ export const Order: React.FC = ({}) => {
               });
             }}
           />
-        ))}
+        )) : <Box sx={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}><Typography sx={{fontSize: "18px"}}>The order list is empty.</Typography></Box>}
       </Container>
     </Container>
   );
