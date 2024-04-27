@@ -13,7 +13,7 @@ const rabbitReceiver = getTask('rapid-runner-rabbit', 'completed-orders');
 const server = http.createServer(app);
 socketConnection(server);
 
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 8080;
 server.listen(port, () => {
   console.log(`App running on port ${port}!`);
 });
