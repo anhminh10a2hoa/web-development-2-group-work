@@ -1,7 +1,8 @@
 import { Container, Box, Typography } from "@mui/material";
 import React, { useContext } from "react";
-import { StoreContext } from "../context/StoreProvider";
-import { SandwichCard } from "./SandwichCard";
+import { StoreContext } from "../src/context/StoreProvider";
+import { SandwichCard } from "../src/components/SandwichCard";
+import { Link } from "react-router-dom";
 
 export const StoreMenu: React.FC = ({}) => {
   const { state, dispatch } = useContext(StoreContext);
@@ -22,7 +23,12 @@ export const StoreMenu: React.FC = ({}) => {
         }}
       >
         {state.sandwiches.map((sandwich) => (
-          <SandwichCard key={sandwich._id} item={sandwich} />
+          <Link
+            to={`/sandwich/${sandwich._id}`}
+            style={{ textDecoration: "none" }}
+          >
+            <SandwichCard key={sandwich._id} item={sandwich} />
+          </Link>
         ))}
       </Container>
     </Container>

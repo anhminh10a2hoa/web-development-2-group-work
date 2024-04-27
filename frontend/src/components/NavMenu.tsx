@@ -54,11 +54,6 @@ function NavMenu() {
     setAnchorEl(null);
   };
 
-  const trigger = useScrollTrigger({
-    disableHysteresis: true,
-    threshold: 10,
-  });
-
   return (
     <ElevationScroll>
       <AppBar
@@ -86,11 +81,11 @@ function NavMenu() {
               </Button>
             </Link>
             <Button onClick={() => dispatch({ type: "TOGGLE_CART" })}>
-              Cart
+              Cart {state.cart.length > 0 ? ` (${state.cart.length})` : ""}
             </Button>
-            {state.user ? (
-              <React.Fragment>
-                <Box sx={{ flexGrow: 1, textAlign: "end" }}>
+            <Box sx={{ flexGrow: 1, textAlign: "end" }}>
+              {state.user ? (
+                <React.Fragment>
                   <Button onClick={handleClick}>
                     <Typography
                       variant="subtitle2"
@@ -112,13 +107,13 @@ function NavMenu() {
                   >
                     <MenuItem onClick={onLogout}>Logout</MenuItem>
                   </Menu>
-                </Box>
-              </React.Fragment>
-            ) : (
-              <Link to={"/login"}>
-                <Button>Login</Button>
-              </Link>
-            )}
+                </React.Fragment>
+              ) : (
+                <Link to={"/login"}>
+                  <Button>Login</Button>
+                </Link>
+              )}
+            </Box>
           </React.Fragment>
         </Toolbar>
       </AppBar>

@@ -1,7 +1,7 @@
 import { Box, Button, Container, Snackbar, Typography } from "@mui/material";
 import React, { useContext } from "react";
-import { StoreContext } from "../context/StoreProvider";
-import { OrderItem } from "./OrderItem";
+import { StoreContext } from "../src/context/StoreProvider";
+import { OrderItem } from "../src/components/OrderItem";
 
 export const Order: React.FC = ({}) => {
   const { state, dispatch } = useContext(StoreContext);

@@ -1,55 +1,61 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
-import loginService from '../services/login';
-import { StoreContext } from '../context/StoreProvider';
-import { useNavigate } from 'react-router-dom';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
+import loginService from "../src/services/login";
+import { StoreContext } from "../src/context/StoreProvider";
+import { useNavigate } from "react-router-dom";
 
 const RegisterModal = () => {
   const { state, dispatch } = React.useContext(StoreContext);
   const navigate = useNavigate();
 
-  const handleSubmit = async (event : React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
     const information = {
-      name: data.get('username')?.toString(),
-      email: data.get('email')?.toString(),
-      password: data.get('password')?.toString(),
-      repeat_password: data.get('password-repeat')?.toString()
+      name: data.get("username")?.toString(),
+      email: data.get("email")?.toString(),
+      password: data.get("password")?.toString(),
+      repeat_password: data.get("password-repeat")?.toString(),
     };
 
     if (information.password !== information.repeat_password) {
-      dispatch({ type : "SET_SIGNUP_MESSAGE", payload : "The repeat password does not match the original password. Please re-enter your password."});
+      dispatch({
+        type: "SET_SIGNUP_MESSAGE",
+        payload:
+          "The repeat password does not match the original password. Please re-enter your password.",
+      });
       return;
     }
-    
+
     try {
       await loginService.register(information);
-      dispatch({ type : "SET_SIGNUP_MESSAGE", payload : "Sign up new account success."});
+      dispatch({
+        type: "SET_SIGNUP_MESSAGE",
+        payload: "Sign up new account success.",
+      });
       setTimeout(() => {
-        navigate('/login');
+        navigate("/login");
       }, 1000);
     } catch (error) {
       console.error((error as any).response.data.error.message);
     }
   };
 
-
   return (
     <Box
       sx={{
         marginTop: 8,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
       }}
     >
-      <Typography sx={{fontFamily: 'Futura' }} component="h1" variant="h5">
+      <Typography sx={{ fontFamily: "Futura" }} component="h1" variant="h5">
         Sign up
       </Typography>
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
@@ -99,21 +105,13 @@ const RegisterModal = () => {
             />
           </Grid>
         </Grid>
-        <Typography>
-          {state.signupMessage}
-        </Typography>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-        >
+        <Typography>{state.signupMessage}</Typography>
+        <Button type="submit" fullWidth variant="contained">
           Sign Up
         </Button>
       </Box>
     </Box>
   );
-}
-
-
+};
 
 export default RegisterModal;
