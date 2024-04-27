@@ -7,9 +7,10 @@ import {
   Snackbar,
   Typography,
 } from "@mui/material";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StoreContext } from "../context/StoreProvider";
 import CloseIcon from "@mui/icons-material/Close";
+import { Sandwich } from "../context/reducer";
 
 interface ProductProps {
   id: string;
@@ -19,11 +20,13 @@ export const Product: React.FC<ProductProps> = ({ id }) => {
   const { state, dispatch } = useContext(StoreContext);
   const [open, setOpen] = React.useState(false);
 
-  const sandwich = state.sandwiches.find((s) => s._id === id);
+  const [sandwich, setSandwich] = useState<Sandwich>();
 
   useEffect(() => {
-    dispatch({ type: "SET_CURRENT_SANDWICH", payload: sandwich });
-  }, [sandwich]);
+    const newSandwich = state.sandwiches.find((s) => s._id === id);
+    if (newSandwich) setSandwich({ ...sandwich, ...newSandwich });
+    dispatch({ type: "SET_CURRENT_SANDWICH", payload: newSandwich });
+  }, [id, state.sandwiches]);
 
   const onAddToCart = () => {
     setOpen(true);
@@ -31,26 +34,13 @@ export const Product: React.FC<ProductProps> = ({ id }) => {
     dispatch({ type: "SET_CURRENT_SANDWICH", payload: sandwich });
   };
 
-  const handleClose = (_: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpen(false);
+  const onTopping = (id: number, number: number) => {
+    dispatch({
+      type: "SET_CURRENT_TOPPING",
+      id,
+      number,
+    });
   };
-
-  const action = (
-    <React.Fragment>
-      <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
-        onClick={handleClose}
-      >
-        <CloseIcon fontSize="small" />
-      </IconButton>
-    </React.Fragment>
-  );
 
   return sandwich && state.currentSandwich ? (
     <Container
@@ -120,24 +110,16 @@ export const Product: React.FC<ProductProps> = ({ id }) => {
                   aria-label="outlined button group"
                 >
                   <Button
-                    onClick={() =>
-                      dispatch({
-                        type: "SET_CURRENT_TOPPING",
-                        id: i,
-                        number: -1,
-                      })
-                    }
+                    onClick={() => {
+                      onTopping(i, -1);
+                    }}
                   >
                     -
                   </Button>
                   <Button
-                    onClick={() =>
-                      dispatch({
-                        type: "SET_CURRENT_TOPPING",
-                        id: i,
-                        number: 1,
-                      })
-                    }
+                    onClick={() => {
+                      onTopping(i, 1);
+                    }}
                   >
                     +
                   </Button>
