@@ -128,7 +128,9 @@ export const Product: React.FC<ProductProps> = ({ id }) => {
             );
           })}
         </Box>
-        <Button onClick={onAddToCart}>Add to cart</Button>
+        <Button variant="contained" onClick={onAddToCart}>
+          Add to cart
+        </Button>
       </Box>
     </Container>
   ) : null;
