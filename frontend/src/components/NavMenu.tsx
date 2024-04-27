@@ -59,39 +59,41 @@ function NavMenu() {
     <ElevationScroll>
       <AppBar
         sx={{
-          backgroundColor: trigger ? "rgba(255,255,255,0.7)" : "transparent",
+          backgroundColor: "gold",
         }}
       >
         <Toolbar>
-          {state.user ? (
-            <>
-              <Button>
-                <Link to={"/"}>Menu</Link>
-              </Button>
-              <Button onClick={handleClick}>{state.user.name}</Button>
-              <Button onClick={() => dispatch({ type: "TOGGLE_CART" })}>
-                Cart
-              </Button>
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                MenuListProps={{
-                  "aria-labelledby": "basic-button",
-                }}
-              >
-                <MenuItem onClick={handleClose}>
-                  <Link to={"/orders"}>Orders</Link>
-                </MenuItem>
-                <MenuItem onClick={onLogout}>Logout</MenuItem>
-              </Menu>
-            </>
-          ) : (
+          <React.Fragment>
             <Button>
-              <Link to={"/login"}>Login</Link>
+              <Link to={"/"}>Menu</Link>
             </Button>
-          )}
+            <Button onClick={() => dispatch({ type: "TOGGLE_CART" })}>
+              Cart
+            </Button>
+            {state.user ? (
+              <React.Fragment>
+                <Button onClick={handleClick}>{state.user.name}</Button>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
+                >
+                  <MenuItem onClick={handleClose}>
+                    <Link to={"/orders"}>Orders</Link>
+                  </MenuItem>
+                  <MenuItem onClick={onLogout}>Logout</MenuItem>
+                </Menu>
+              </React.Fragment>
+            ) : (
+              <Button>
+                <Link to={"/login"}>Login</Link>
+              </Button>
+            )}
+          </React.Fragment>
         </Toolbar>
       </AppBar>
     </ElevationScroll>

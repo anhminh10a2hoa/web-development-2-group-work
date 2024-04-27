@@ -14,13 +14,11 @@ import {
   useParams,
   Navigate,
 } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 
 const OrderPage = () => {
   return (
     <Box sx={{ position: "relative" }}>
-      <Navbar />
-      <CartDrawer />
       <Order />
     </Box>
   );
@@ -31,8 +29,6 @@ const ProductPage = () => {
 
   return (
     <Box sx={{ position: "relative" }}>
-      <Navbar />
-      <CartDrawer />
       <Product id={product.id ? product.id : ""} />
     </Box>
   );
@@ -41,8 +37,6 @@ const ProductPage = () => {
 const StoreFront = () => {
   return (
     <Box sx={{ position: "relative" }}>
-      <Navbar />
-      <CartDrawer />
       <StoreMenu />
     </Box>
   );
@@ -53,14 +47,16 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Router>
-        <Route path="/" element={<StoreFront />} />
-        <Route path="/sandwich/:id" element={<ProductPage />} />
-        {state.user && <Route path="/orders" element={<OrderPage />} />}
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path={`*`} element={<Navigate to={`/`} />}></Route>
-      </Router>
+      <Navbar>
+        <Router>
+          <Route path="/" element={<StoreFront />} />
+          <Route path="/sandwich/:id" element={<ProductPage />} />
+          {state.user && <Route path="/orders" element={<OrderPage />} />}
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path={`*`} element={<Navigate to={`/`} />}></Route>
+        </Router>
+      </Navbar>
     </BrowserRouter>
   );
 }
