@@ -17,19 +17,26 @@ export const CartDrawer: React.FC = ({}) => {
 
   let totalPrice = 0;
 
-  const onPlaceOrder = () => {
-    if (state.user === null) 
-    {
-      dispatch({ type : "SET_SNACKBAR_MESSAGE", payload : "You need to log in to make an order!"});
+  const onPlaceOrder = async () => {
+    if (state.user === null) {
+      dispatch({
+        type: "SET_SNACKBAR_MESSAGE",
+        payload: "You need to log in to make an order!",
+      });
       dispatch({ type: "TOGGLE_CART" });
       return;
     }
-    
-    makeOrder(state.cart, Cookies.get('accessToken')?.toString()!);
-    dispatch({ type : "SET_CART", payload: []});
-    dispatch({ type : "SET_SNACKBAR_MESSAGE", payload : "Order successful!"});
+
+    const orders = await makeOrder(
+      state.cart,
+      Cookies.get("accessToken")?.toString()!
+    );
+
+    dispatch({ type: "ADD_ORDER", payload: orders.data });
+    dispatch({ type: "SET_CART", payload: [] });
+    dispatch({ type: "SET_SNACKBAR_MESSAGE", payload: "Order successful!" });
     dispatch({ type: "TOGGLE_CART" });
-  }
+  };
 
   return (
     <Drawer
@@ -78,7 +85,9 @@ export const CartDrawer: React.FC = ({}) => {
 
               <Container sx={{ display: "flex", mb: 5, mt: 1 }}>
                 <Button
-                  onClick={() => dispatch({ type: "REMOVE_ITEM_FROM_CART", id: i })}
+                  onClick={() =>
+                    dispatch({ type: "REMOVE_ITEM_FROM_CART", id: i })
+                  }
                 >
                   <CloseIcon />
                   Remove
@@ -102,7 +111,9 @@ export const CartDrawer: React.FC = ({}) => {
         </Container>
 
         {state.cart.length !== 0 ? (
-          <Button onClick={() => onPlaceOrder()} sx={{ mt: 5 }}>Place Order</Button>
+          <Button onClick={() => onPlaceOrder()} sx={{ mt: 5 }}>
+            Place Order
+          </Button>
         ) : null}
       </Box>
     </Drawer>

@@ -21,7 +21,6 @@ export const makeOrder = async (payload: SandwichUser[], token: string) => {
       },
       { headers: { Authorization: `Bearer ${token}` } }
     )
-    .then((res) => res.data);
 };
 
 export const deleteOrder = async (orderId: string, token: string) => {
