@@ -108,6 +108,7 @@ export type Action =
   | { type: "TOGGLE_CART" }
   | { type: "REMOVE_ITEM_FROM_CART"; id: number }
   | { type: "SET_ORDERS"; payload: Order[] }
+  | { type: "CLEAR_ORDERS" }
   | { type: "SET_SIGNUP_MESSAGE"; payload: string }
   | { type: "DELETE_ORDER"; orderId: string }
   | { type: "ADD_ORDER"; payload: Order };
@@ -268,6 +269,13 @@ export const reducer = (
       return {
         ...state,
         orders: newOrder,
+      };
+    }
+
+    case "CLEAR_ORDERS": {
+      return {
+        ...state,
+        orders: [],
       };
     }
 
