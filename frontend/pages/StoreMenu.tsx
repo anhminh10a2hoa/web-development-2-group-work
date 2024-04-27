@@ -1,7 +1,7 @@
 import { Container, Snackbar, Typography } from "@mui/material";
 import React, { useContext } from "react";
-import { StoreContext } from "../context/StoreProvider";
-import { SandwichCard } from "./SandwichCard";
+import { StoreContext } from "../src/context/StoreProvider";
+import { SandwichCard } from "../src/components/SandwichCard";
 import { Link } from "react-router-dom";
 
 export const StoreMenu: React.FC = ({}) => {

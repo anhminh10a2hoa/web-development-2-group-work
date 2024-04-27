@@ -1,22 +1,12 @@
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Container,
-  IconButton,
-  Snackbar,
-  Typography,
-} from "@mui/material";
+import { Box, Button, ButtonGroup, Container, Typography } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
-import { StoreContext } from "../context/StoreProvider";
-import CloseIcon from "@mui/icons-material/Close";
-import { Sandwich } from "../context/reducer";
+import { StoreContext } from "../src/context/StoreProvider";
+import { Sandwich } from "../src/context/reducer";
+import { useParams } from "react-router-dom";
 
-interface ProductProps {
-  id: string;
-}
+export const Product: React.FC = () => {
+  const { id } = useParams();
 
-export const Product: React.FC<ProductProps> = ({ id }) => {
   const { state, dispatch } = useContext(StoreContext);
   const [open, setOpen] = React.useState(false);
 

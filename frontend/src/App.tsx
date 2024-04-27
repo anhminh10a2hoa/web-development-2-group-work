@@ -1,12 +1,12 @@
 import { StoreContext, StoreProvider } from "./context/StoreProvider";
 import { Box } from "@mui/material";
-import { Order } from "./components/Order";
+import { Order } from "../pages/Order";
 import Navbar from "./components/Navbar";
 import { CartDrawer } from "./components/CartDrawer";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
-import { Product } from "./components/Product";
-import { StoreMenu } from "./components/StoreMenu";
+import Login from "../pages/Login";
+import Signup from "../pages/Signup";
+import { Product } from "../pages/Product";
+import { StoreMenu } from "../pages/StoreMenu";
 import {
   BrowserRouter,
   Routes as Router,
@@ -16,32 +16,6 @@ import {
 } from "react-router-dom";
 import { useContext } from "react";
 
-const OrderPage = () => {
-  return (
-    <Box sx={{ position: "relative" }}>
-      <Order />
-    </Box>
-  );
-};
-
-const ProductPage = () => {
-  let product = useParams();
-
-  return (
-    <Box sx={{ position: "relative" }}>
-      <Product id={product.id ? product.id : ""} />
-    </Box>
-  );
-};
-
-const StoreFront = () => {
-  return (
-    <Box sx={{ position: "relative" }}>
-      <StoreMenu />
-    </Box>
-  );
-};
-
 function App() {
   const { state } = useContext(StoreContext);
 
@@ -50,9 +24,9 @@ function App() {
       {state.isReady && (
         <Navbar>
           <Router>
-            <Route path="/" element={<StoreFront />} />
-            <Route path="/sandwich/:id" element={<ProductPage />} />
-            {state.user && <Route path="/orders" element={<OrderPage />} />}
+            <Route path="/" element={<StoreMenu />} />
+            <Route path="/sandwich/:id" element={<Product />} />
+            {state.user && <Route path="/orders" element={<Order />} />}
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path={`*`} element={<Navigate to={`/`} />}></Route>
