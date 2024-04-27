@@ -54,11 +54,6 @@ function NavMenu() {
     setAnchorEl(null);
   };
 
-  const trigger = useScrollTrigger({
-    disableHysteresis: true,
-    threshold: 10,
-  });
-
   return (
     <ElevationScroll>
       <AppBar
@@ -86,7 +81,7 @@ function NavMenu() {
               </Button>
             </Link>
             <Button onClick={() => dispatch({ type: "TOGGLE_CART" })}>
-              Cart
+              Cart {state.cart.length > 0 ? ` (${state.cart.length})` : ""}
             </Button>
             <Box sx={{ flexGrow: 1, textAlign: "end" }}>
               {state.user ? (
