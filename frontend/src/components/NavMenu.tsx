@@ -1,9 +1,12 @@
 import {
   AppBar,
+  Box,
   Button,
+  Chip,
   Menu,
   MenuItem,
   Toolbar,
+  Typography,
   useScrollTrigger,
 } from "@mui/material";
 import React, { useContext } from "react";
@@ -72,21 +75,32 @@ function NavMenu() {
             </Button>
             {state.user ? (
               <React.Fragment>
-                <Button onClick={handleClick}>{state.user.name}</Button>
-                <Menu
-                  id="basic-menu"
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={handleClose}
-                  MenuListProps={{
-                    "aria-labelledby": "basic-button",
-                  }}
-                >
-                  <MenuItem onClick={handleClose}>
-                    <Link to={"/orders"}>Orders</Link>
-                  </MenuItem>
-                  <MenuItem onClick={onLogout}>Logout</MenuItem>
-                </Menu>
+                <Box sx={{ flexGrow: 1, textAlign: "end" }}>
+                  <Button onClick={handleClick}>
+                    <Typography
+                      variant="subtitle2"
+                      paddingRight={2}
+                      component="span"
+                    >
+                      {state.user.name}
+                    </Typography>
+                    <Chip label={state.user.role.toUpperCase()} />
+                  </Button>
+                  <Menu
+                    id="basic-menu"
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    MenuListProps={{
+                      "aria-labelledby": "basic-button",
+                    }}
+                  >
+                    <MenuItem onClick={handleClose}>
+                      <Link to={"/orders"}>Orders</Link>
+                    </MenuItem>
+                    <MenuItem onClick={onLogout}>Logout</MenuItem>
+                  </Menu>
+                </Box>
               </React.Fragment>
             ) : (
               <Button>

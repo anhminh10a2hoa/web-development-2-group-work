@@ -9,6 +9,12 @@ export const fetchOrders = async (token: string) => {
     .then((res) => res.data);
 };
 
+export const fetchAllOrders = async (token: string) => {
+  return axios
+    .get(URL + "/all", { headers: { Authorization: `Bearer ${token}` } })
+    .then((res) => res.data);
+};
+
 export const makeOrder = async (payload: SandwichUser[], token: string) => {
   return axios
     .post(
