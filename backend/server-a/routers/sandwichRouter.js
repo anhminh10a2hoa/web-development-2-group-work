@@ -7,7 +7,7 @@ const {
   createSandwich,
   updateSandwich,
   deleteSandwich,
-} = require('../controllers/sandwichController');
+} = require('../controllers/sandwichControllers');
 
 const sandwichRouter = express.Router();
 

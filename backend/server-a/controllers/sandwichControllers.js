@@ -65,7 +65,7 @@ const deleteSandwich = async (req, res) => {
 
     const sandwich = await Sandwich.findByIdAndDelete(idSandwich);
 
-    if (!sandwich) {
+    if (sandwich == []) {
       return res.status(405).json({ message: 'Invalid input' });
     }
     if (!sandwich) {

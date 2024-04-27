@@ -4,6 +4,7 @@
 'use strict';
 
 var amqp = require('amqplib');
+const { orderFilled } = require('../controllers/messageController');
 
 module.exports.getTask = function(rabbitHost, queueName){
   amqp.connect('amqp://' + rabbitHost).then(function(conn) {
@@ -18,14 +19,15 @@ module.exports.getTask = function(rabbitHost, queueName){
       return ok;
 
       function doWork(msg) {
-        var body = order.content.toString();
+        var body = msg.content.toString();
         console.log(" [x] Received '%s'", body);
-        var secs = body.split('.').length - 1;
+        // var secs = body.split('.').length - 1;
         //console.log(" [x] Task takes %d seconds", secs);
         setTimeout(function() {
+          orderFilled(JSON.parse(body));
           console.log(" [x] Done");
           ch.ack(msg);
-        }, secs * 1000);
+        }, 1000);
       }
     });
   }).catch(console.warn);

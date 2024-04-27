@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// Default values for schema properties
 const SCHEMA_DEFAULTS = {
   name: {
     minLength: 1,
@@ -9,11 +8,10 @@ const SCHEMA_DEFAULTS = {
   },
 };
 
-// Schema definition for order items
 const orderItemSchema = new Schema({
   _id: {
     type: Schema.Types.ObjectId,
-    ref: 'Sandwich',
+    ref: 'sandwich',
     required: true,
   },
   name: {
@@ -23,6 +21,7 @@ const orderItemSchema = new Schema({
     minLength: SCHEMA_DEFAULTS.name.minLength,
     maxLength: SCHEMA_DEFAULTS.name.maxLength,
   },
+
   price: {
     type: Number,
     required: true,
@@ -33,16 +32,16 @@ const orderItemSchema = new Schema({
       message: 'Price cannot be 0',
     },
   },
+
   description: {
     type: String,
-    required: [true, 'An order item must have a description'],
+    required: [true, 'An order must have a description'],
   },
   toppings: {
     type: [Object],
   },
 });
 
-// Schema definition for orders
 const orderSchema = new Schema({
   customerId: {
     type: Schema.Types.ObjectId,
@@ -80,23 +79,20 @@ const orderSchema = new Schema({
       default: undefined,
     },
   },
-  // Array of order items
+  // for items:
   items: {
     type: [orderItemSchema],
     minLength: 1,
     required: true,
     validate: {
       validator: (items) => items.length > 0,
-      message: 'Order must contain at least one item',
+      message: 'No empty order',
     },
   },
 });
 
-// Configure toJSON options for serialization
+// Omit the version key when serialized to JSON
 orderSchema.set('toJSON', { virtuals: false, versionKey: false });
 
-// Creating the Order model
-const Order = mongoose.model('Order', orderSchema);
-
-// Exporting the Order model
+const Order = new mongoose.model('Order', orderSchema);
 module.exports = Order;
